@@ -2,3 +2,12 @@ a{
     text-decoration: none;
     color: inherit;
 }
+
+.input-form-bg{
+    border: 1px solid rgba(102, 51, 153, 0.8);
+    border-radius: 10px;
+}
+
+body{
+    background-image: linear-gradient(rgba(48, 48, 48, 0.6), rgb(243, 122, 36, 0.3));
+}

@@ -1,11 +1,22 @@
 import { createContext, useMemo, useState } from 'react'
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 
 export const AuthContext = createContext();
 export const TokenContext = createContext();
 export const MessageContext = createContext();
 export const UserContext = createContext();
+export const LoginFormContext = createContext();
 
+export const useNavigation = () => {
+    const history = useNavigate();
+
+    const navigate = (to) => {
+        history(to);
+    };
+
+    return navigate;
+};
 
 export const AppContext = ({ children }) => {
 
@@ -26,7 +37,7 @@ export const AppContext = ({ children }) => {
             <TokenContext.Provider value={tokenContext}>
                 <MessageContext.Provider value={messageContext}>
                     <UserContext.Provider value={userContext}>
-                        {children}
+                            {children}
                     </UserContext.Provider>
                 </MessageContext.Provider>
             </TokenContext.Provider>
