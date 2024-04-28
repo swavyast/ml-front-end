@@ -90,15 +90,41 @@ const Login = ({ toggle, setToggle }) => {
 
     const submitHandler = (event) => {
         event.preventDefault();
+        checkInput(event);
         navigate('/');
     }
 
+    const checkInput = (event) => {
+        event.preventDefault();
+        const formData = new FormData(event.target); // Get form data
+        const username = formData.get('username'); // Get value of username input
+        const password = formData.get('password'); // Get value of password input
+    
+        console.log('Username:', username);
+        console.log('Password:', password);
+    
+        if (!username) {
+            setTimeout(()=>{setError({ ...error, username: 'Username cannot be empty' })}, 500);
+        }
+        if (!password) {
+            setTimeout(()=>{setError({ ...error, password: 'Password cannot be empty' })}, 1800);
+        }
+        resetError();
+    }
+
+    const resetError = () => {
+        setTimeout(() => {
+            setError({ username: '', password : ''});
+        }, 5000);
+       
+    };
+    
     return (
-        <div className='py-auto' style={{ minHeight: '550px', marginTop:'100px' }}>
+        <div className='py-auto' style={{ minHeight: '550px', marginTop: '100px' }}>
             <div id='formDiv' style={{ position: 'relative' }}>
                 <Container>
-                    <Form method='post' className='input-form-bg d-flex flex-column text-black mx-auto shadow-lg w-50' onSubmit={(event) => submitHandler(event)}>
-                    <Form.Text className=''><center className='fs-4 mb-4 text-white'>Login</center></Form.Text>
+                    <Form method='post' className='form-bg d-flex flex-column text-black mx-auto shadow-lg w-50' onSubmit={(event) => submitHandler(event)}>
+                        <Form.Text className=''><center className='fs-4 mb-4 text-white'>Login</center></Form.Text>
                         <Form.Group className='d-flex flex-row mx-auto w-75'>
                             <Form.Label htmlFor='username' className='my-auto' style={{ marginRight: '25px' }}>Email/Username</Form.Label>
                             <Form.Control
@@ -127,7 +153,7 @@ const Login = ({ toggle, setToggle }) => {
                             <Button type='submit' className='btn btn-success'>Login</Button>
                             <Button type='submit' className='btn btn-secondary' onClick={resetFormData}>Reset</Button>
                         </Form.Group>
-                        <Form.Text className='bg-light py-1 ms-auto mb-3 px-2' style={{width:'220px'}}>Not registered yet ? <b className='text-primary px-2' role='button' onClick={() => (setToggle(!toggle))}>Register</b></Form.Text>
+                        <Form.Text className='bg-light py-1 ms-auto mb-3 px-2' style={{ width: '220px' }}>Not registered yet ? <b className='text-primary px-2' role='button' onClick={() => (setToggle(!toggle))}>Register</b></Form.Text>
                     </Form>
                 </Container>
             </div>
@@ -135,18 +161,14 @@ const Login = ({ toggle, setToggle }) => {
 
                 {
                     error.username && (
-                        <Popover>
-                            <Popover.Body>
-                                {error.username && <span className="text-danger">{error.username}</span>}
-                            </Popover.Body>
-                        </Popover>
+                        <span className="text-danger">{error.username}</span>
                     )
                 }
 
                 {
                     error.password && (<Popover>
                         <Popover.Body>
-                            {error.password && <span className="text-danger">{error.password}</span>}
+                            <span className="text-danger">{error.password}</span>
                         </Popover.Body>
                     </Popover>)
                 }

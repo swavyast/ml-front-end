@@ -1,4 +1,4 @@
-a{
+a, .link{
     text-decoration: none;
     color: inherit;
 }
@@ -10,4 +10,21 @@ a{
 
 body{
     background-image: linear-gradient(rgba(48, 48, 48, 0.6), rgb(243, 122, 36, 0.3));
+}
+
+.avatar{
+    border: 1px solid rgba(245, 245, 245, 0.9);
+    border-radius: 50%;
+}
+
+.fmlg{
+    /* footer menu list group item */
+    background-color: inherit;
+    border: 0px;
+}
+
+.form-bg{
+    /* background-image: linear-gradient(rgba(118, 206, 59, 0.4), rgba(255, 109, 5, 0.1)); */
+    background-image: linear-gradient(rgba(120, 175, 238, 0.6), rgba(90, 255, 178, 0.3));
+    border-radius: 10px;
 }

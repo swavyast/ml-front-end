@@ -26,7 +26,7 @@ const Header = () => {
 
     return (
         <div className='d-flex w-100 justify-content-between bg-primary'>
-            <Navbar bg='primary' data-bs-theme='primary' className='d-flex flex-row' style={{ height: '80px' }}>
+            <Navbar bg='primary' data-bs-theme='primary' className='d-flex flex-row' style={{ height: '80px'}}>
                 <Container>
                     <Navbar.Brand as={Link} to={'/'}><FontAwesomeIcon icon={faHouse} className='fs-1 fw-2' style={{color:'rgba(255, 120, 10)'}} /> <b className='fs-1 fw-1 text-dark' style={{color:''}}>mL</b></Navbar.Brand>
                     <span className='vr text-white fs-5 mx-2'></span>

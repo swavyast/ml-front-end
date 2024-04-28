@@ -167,7 +167,7 @@ const Register = ({ toggle, setToggle }) => {
         <div className='py-auto' style={{ minHeight: '550px', marginTop:'-10px'}}> 
             <div id='formDiv' style={{ position: 'relative' }}>
                 <Container className='mt-5'>
-                    <Form method='post' className='input-form-bg d-flex flex-column text-black mx-auto shadow-lg w-50' onSubmit={(event) => submitHandler(event)}>
+                    <Form method='post' className='form-bg d-flex flex-column text-black mx-auto shadow-lg w-50' onSubmit={(event) => submitHandler(event)}>
                         <Form.Text className=''><center className='fs-4 mb-4 text-white'>Register</center></Form.Text>
                         <Form.Group className='d-flex flex-row mx-auto w-75'>
                             <Form.Label htmlFor='email' className='my-auto' style={{ marginRight: '82px' }}>Email</Form.Label>
