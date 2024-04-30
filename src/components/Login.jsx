@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext, LoginFormContext, MessageContext, TokenContext, UserContext, useNavigation } from '../AppContext';
 import { Button, Container, Form, InputGroup, Modal, Popover } from 'react-bootstrap';
 import { FormToggle } from '../AppContext';
@@ -10,6 +10,7 @@ const Login = ({ toggle, setToggle }) => {
     const messageContext = useContext(MessageContext);
     const userContext = useContext(UserContext);
     const navigate = useNavigation();
+
 
     const [formData, setFormData] = useState({
         username: '',
@@ -88,9 +89,22 @@ const Login = ({ toggle, setToggle }) => {
         setError(!error);
     }
 
-    const submitHandler = (event) => {
+    const submitHandler = async (event) => {
         event.preventDefault();
         checkInput(event);
+        try {
+            const response = await fetch('/api/login', { method: 'post', body: formData });
+            if (response.ok) {
+                const data = await response.json();
+                const token = data.token;
+                localStorage.setItem('token', token);
+            } else {
+                const errorMessage = response.statusText;
+                setError(errorMessage);
+            }
+        } catch (error) {
+            setError(error);
+        }
         navigate('/');
     }
 
@@ -99,29 +113,29 @@ const Login = ({ toggle, setToggle }) => {
         const formData = new FormData(event.target); // Get form data
         const username = formData.get('username'); // Get value of username input
         const password = formData.get('password'); // Get value of password input
-    
+
         console.log('Username:', username);
         console.log('Password:', password);
-    
+
         if (!username) {
-            setTimeout(()=>{setError({ ...error, username: 'Username cannot be empty' })}, 500);
+            setTimeout(() => { setError({ ...error, username: 'Username cannot be empty' }) }, 500);
         }
         if (!password) {
-            setTimeout(()=>{setError({ ...error, password: 'Password cannot be empty' })}, 1800);
+            setTimeout(() => { setError({ ...error, password: 'Password cannot be empty' }) }, 1800);
         }
         resetError();
     }
 
     const resetError = () => {
         setTimeout(() => {
-            setError({ username: '', password : ''});
+            setError({ username: '', password: '' });
         }, 5000);
-       
+
     };
-    
+
     return (
-        <div className='py-auto' style={{ minHeight: '550px', marginTop: '100px' }}>
-            <div id='formDiv' style={{ position: 'relative' }}>
+        <Container fluid className='py-auto' style={{ minHeight: '550px', marginTop: '100px' }}>
+            <Container id='formDiv' style={{ position: 'relative' }}>
                 <Container>
                     <Form method='post' className='form-bg d-flex flex-column text-black mx-auto shadow-lg w-50' onSubmit={(event) => submitHandler(event)}>
                         <Form.Text className=''><center className='fs-4 mb-4 text-white'>Login</center></Form.Text>
@@ -156,8 +170,8 @@ const Login = ({ toggle, setToggle }) => {
                         <Form.Text className='bg-light py-1 ms-auto mb-3 px-2' style={{ width: '220px' }}>Not registered yet ? <b className='text-primary px-2' role='button' onClick={() => (setToggle(!toggle))}>Register</b></Form.Text>
                     </Form>
                 </Container>
-            </div>
-            <div id="responseDiv" style={{ position: 'absolute', marginTop: '-17%', marginLeft: '61%' }}>
+            </Container>
+            <Container id="responseDiv" style={{ position: 'absolute', marginTop: '-17%', marginLeft: '61%' }}>
 
                 {
                     error.username && (
@@ -172,8 +186,8 @@ const Login = ({ toggle, setToggle }) => {
                         </Popover.Body>
                     </Popover>)
                 }
-            </div>
-        </div>
+            </Container>
+        </Container>
     )
 }
 

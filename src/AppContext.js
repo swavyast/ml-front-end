@@ -7,6 +7,7 @@ export const TokenContext = createContext();
 export const MessageContext = createContext();
 export const UserContext = createContext();
 export const LoginFormContext = createContext();
+export const ScreenContext = createContext();
 
 export const useNavigation = () => {
     const history = useNavigate();
@@ -32,12 +33,13 @@ export const AppContext = ({ children }) => {
     const [username, setUsername] = useState('');
     const userContext = useMemo(() => ({ username, setUsername }), [username, setUsername]);
 
+
     return (
         <AuthContext.Provider value={authContext}>
             <TokenContext.Provider value={tokenContext}>
                 <MessageContext.Provider value={messageContext}>
                     <UserContext.Provider value={userContext}>
-                            {children}
+                        {children}
                     </UserContext.Provider>
                 </MessageContext.Provider>
             </TokenContext.Provider>

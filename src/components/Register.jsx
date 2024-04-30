@@ -164,8 +164,8 @@ const Register = ({ toggle, setToggle }) => {
     }
 
     return (
-        <div className='py-auto' style={{ minHeight: '550px', marginTop:'-10px'}}> 
-            <div id='formDiv' style={{ position: 'relative' }}>
+        <Container className='py-auto' style={{ minHeight: '550px', marginTop:'-10px'}}> 
+            <Container id='formDiv' style={{ position: 'relative' }}>
                 <Container className='mt-5'>
                     <Form method='post' className='form-bg d-flex flex-column text-black mx-auto shadow-lg w-50' onSubmit={(event) => submitHandler(event)}>
                         <Form.Text className=''><center className='fs-4 mb-4 text-white'>Register</center></Form.Text>
@@ -232,8 +232,8 @@ const Register = ({ toggle, setToggle }) => {
                         <Form.Text className='bg-light py-1 ms-auto mb-3 px-2' style={{width:'220px'}}>Registered already ? <b className='text-primary px-2' role='button' onClick={() => (setToggle(!toggle))}>Login</b></Form.Text>
                     </Form>
                 </Container>
-            </div>
-            <div id="responseDiv" style={{ position: 'absolute', marginTop: '-27%', marginLeft: '61%' }}>
+            </Container>
+            <Container id="responseDiv" style={{ position: 'absolute', marginTop: '-27%', marginLeft: '61%' }}>
                 {
                     error.phone && (
                         <Popover>
@@ -287,8 +287,8 @@ const Register = ({ toggle, setToggle }) => {
                         </Popover.Body>
                     </Popover>)
                 }
-            </div>
-        </div>
+            </Container>
+        </Container>
     )
 }
 

@@ -7,10 +7,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free'
 import '@fortawesome/fontawesome-svg-core'
 import {faGithub, faLinkedin, faTumblr, faDiscord, faWhatsapp, faFacebook, faTwitter, faXTwitter, faInstagram, faSkype, faGooglePlay, faGoogleDrive, faYoutube, faTelegram} from '@fortawesome/free-brands-svg-icons'
-import {faHouse, faAngleLeft, faAngleDoubleRight, faAngleDoubleDown} from '@fortawesome/free-solid-svg-icons'
+import {faHouse, faAngleLeft, faAngleRight, faAngleUp, faAngleDown, faAngleDoubleRight, faAngleDoubleDown} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import myDp from '../src/images/DP_1.png';
-
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -21,7 +20,7 @@ root.render(
 
 export {
   FontAwesomeIcon,
-  faHouse, faAngleLeft, faAngleDoubleRight, faAngleDoubleDown,
+  faHouse, faAngleLeft, faAngleRight, faAngleUp, faAngleDown, faAngleDoubleRight, faAngleDoubleDown,
   faGithub, faLinkedin, faTumblr, faDiscord,
   faWhatsapp, faFacebook, faTwitter, faXTwitter,
   faInstagram, faSkype, faGooglePlay, faGoogleDrive,
