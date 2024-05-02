@@ -6,8 +6,8 @@ export const AuthContext = createContext();
 export const TokenContext = createContext();
 export const MessageContext = createContext();
 export const UserContext = createContext();
-export const LoginFormContext = createContext();
 export const ScreenContext = createContext();
+export const RepositoryContext = createContext();
 
 export const useNavigation = () => {
     const history = useNavigate();
@@ -33,13 +33,18 @@ export const AppContext = ({ children }) => {
     const [username, setUsername] = useState('');
     const userContext = useMemo(() => ({ username, setUsername }), [username, setUsername]);
 
+    const [repositories, setRepositories] = useState([{}]);
+    const repositoryContext = useMemo(() => ({ repositories, setRepositories }), [repositories, setRepositories]);
+
 
     return (
         <AuthContext.Provider value={authContext}>
             <TokenContext.Provider value={tokenContext}>
                 <MessageContext.Provider value={messageContext}>
                     <UserContext.Provider value={userContext}>
-                        {children}
+                        <RepositoryContext.Provider value={repositoryContext}>
+                            {children}
+                        </RepositoryContext.Provider>
                     </UserContext.Provider>
                 </MessageContext.Provider>
             </TokenContext.Provider>

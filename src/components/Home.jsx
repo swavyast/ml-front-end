@@ -17,9 +17,9 @@ const Home = () => {
 
   //just for debugging
 
-  useEffect(() => {
-    userContext.setUsername('User');
-  }, [userContext]);
+  // useEffect(() => {
+  //   userContext.setUsername('User');
+  // }, [userContext]);
 
   const [networkStatus, setNetworkStatus] = useState(
     {

@@ -6,8 +6,8 @@ import Footer from './components/Footer';
 import { AppContext } from './AppContext';
 import ErrorBoundary from './ErrorBoundary';
 
-
 function App() {
+  console.log(process.env.GITHUB_TOKEN);
   return (
     <AppContext>
       <ErrorBoundary>

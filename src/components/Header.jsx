@@ -26,7 +26,7 @@ const Header = () => {
     }
 
     return (
-        <Container fluid className='p-0' id='scrollspy'>
+        <Container fluid className='p-0' id='scrollspy' style={{ borderTop: '22px', borderColor: 'purple' }}>
             <ScrollToScrollspy />
             <Row className='w-100 bg-primary container-fluid m-0'>
                 <Col sm={3} md={6} lg={12} className='d-flex justify-content-between container-fluid'>

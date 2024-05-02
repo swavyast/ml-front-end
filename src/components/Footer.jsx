@@ -1,57 +1,33 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { UserContext, useNavigation } from '../AppContext';
-import { Card, Col, Container, ListGroup, Row } from 'react-bootstrap';
+import { RepositoryContext, UserContext, useNavigation } from '../AppContext';
+import { Button, Card, Col, Container, ListGroup, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { FontAwesomeIcon, faAngleDoubleDown, faAngleDoubleRight, faAngleLeft, faAngleRight, faAngleUp, faDiscord, faFacebook, faGithub, faInstagram, faLinkedin, faSkype, faTelegram, faTumblr, faTwitter, faWhatsapp, faXTwitter, faYoutube, myDp } from '../index'
-import repoService from '../services/RepoService';
+import { FontAwesomeIcon, faAngleDoubleDown, faAngleDoubleRight, faAngleLeft, faAngleUp, faDiscord, faFacebook, faGithub, faInstagram, faLinkedin, faSkype, faTelegram, faTumblr, faTwitter, faWhatsapp, faXTwitter, faYoutube, myDp } from '../index';
 import useScreenSize from '../hooks/ScreenSize';
+import SocialNavigations from './SocialNavigations';
+import useRepoService from '../services/RepoService';
+import { generateRandomString, toCamelCase } from '../js/Utilities';
 
 const Footer = () => {
   // const authContext = useContext(AuthContext);
+
   // const tokenContext = useContext(TokenContext);
+
   // const messageContext = useContext(MessageContext);
-  const userContext = useContext(UserContext);
-  const { isSmall, isMedium, isLarge } = useScreenSize();
+
+  const { username, setUsername } = useContext(UserContext);
+
+  const { repositories } = useContext(RepositoryContext);
+
+  const { resetRepositories, fetchAndMapMyRepo, refreshMyRepo } = useRepoService();
+
+  const { isSmall, isMedium } = useScreenSize();
+
   const navigate = useNavigation();
 
   const [highlight, setHighlight] = useState(false);
-  const [highlightRepo, setHighlightRepo] = useState(false);
 
-  const [repoDetails, setRepoDetails] = useState([{
-    repoId: '',
-    repoName: '',
-    repoUrl: '', //html_url
-    repoApiUrl: '', //url
-    repoDesc: '',
-    gitUrl: '',
-    sshUrl: '',
-    cloneUrl: '',
-    homepage: '',
-    size: '',
-    language: '',
-    forksCount: '',
-    mirrorUrl: '',
-    openIssuesCount: '',
-    license: '',
-    signoffRequired: '',
-    topics: [],
-    defaultBranch: '',
-    visibility: '',
-    hasProjects: false,
-    hasIssues: false,
-    hasDownloads: false,
-    hasWiki: false,
-    hasPages: false,
-    hasDiscussions: false,
-    isArchieved: false,
-    isDisabled: false,
-    allowsForking: false,
-    isTemplate: false,
-    dateCreated: '',
-    datePushed: '',
-    lastUpdated: '',
-
-  }]);
+  const [highlightRepo] = useState(false);
 
   const highlighter = (event) => {
     event.preventDefault();
@@ -60,60 +36,51 @@ const Footer = () => {
   }
 
   useEffect(() => {
-    const repoSection = document.getElementById('repo-section');
-    if (highlightRepo && repoSection) {
-      repoSection.focus();
-    }
-    return () => {}; // This component doesn't render anything
-  }, [highlightRepo]);
+    console.log('setting username now...');
+    setUsername('swavyast');
+    console.log('username after setUsername() : ', username);
+    return () => { };
+  }, [username, setUsername]);
 
 
-  const fetchRepo = () => {
-
-    repoService.fetchMyRepositories()
-      .then((res) => {
-        const repositories = res.map((repo) => ({
-          repoId: repo.id,
-          repoName: repo.name,
-          repoUrl: repo.html_url, //html_url
-          repoApiUrl: repo.url, //url
-          repoDesc: repo.description,
-          gitUrl: repo.git_url,
-          sshUrl: repo.ssh_url,
-          cloneUrl: repo.clone_url,
-          homepage: repo.homepage,
-          size: repo.size,
-          language: repo.language,
-          forksCount: repo.forks_count,
-          mirrorUrl: repo.mirror_url,
-          openIssuesCount: repo.open_issues_count,
-          license: repo.license,
-          signoffRequired: repo.web_commit_signoff_required,
-          topics: [...repo.topics],
-          defaultBranch: repo.default_branch,
-          visibility: repo.visibility,
-          hasProjects: repo.has_projects,
-          hasIssues: repo.has_issues,
-          hasDownloads: repo.has_downloads,
-          hasWiki: repo.has_wiki,
-          hasPages: repo.has_pages,
-          hasDiscussions: repo.has_discussions,
-          isArchieved: repo.archived,
-          isDisabled: repo.disabled,
-          allowsForking: repo.allow_forking,
-          isTemplate: repo.is_template,
-          dateCreated: repo.created_at,
-          datePushed: repo.pushed_at,
-          lastUpdated: repo.updated_at,
-        }))
-
-        setRepoDetails(repositories);
-      })
-  }
+  //fetching and mapping repository at the time of page loading.
 
   useEffect(() => {
-    fetchRepo();
+
+    fetchAndMapMyRepo();
+
+    return () => { };
+
   }, []);
+
+  //repository reset function
+
+  const resetFunction = () => {
+
+    resetRepositories();
+  }
+
+  //repository refresh function
+
+  const refreshRepoDetails = () => {
+
+    refreshMyRepo();
+
+  };
+
+  //highlighting repository section onClick
+
+  useEffect(() => {
+    const repoSection = document.getElementById('repo-section');
+
+    if (repoSection) {
+
+      repoSection.focus();
+
+    }
+
+    return () => { }; // This component doesn't render anything
+  }, [highlightRepo]);
 
   return <Container fluid className='p-0' style={{ minHeight: '200px' }}>
     <Container fluid className='bg-dark p-0 mb-1' style={{ minHeight: '20px' }} />
@@ -176,7 +143,8 @@ const Footer = () => {
             </Col>
             <Col className={highlight ? ('bg-dark') : ('bg-light')}>
               <ListGroup as={'ul'} className='flex-row justify-content-evenly mt-3'>
-                <ListGroup.Item style={{ backgroundColor: 'inherit', border: '0px' }}><Link to={'/'} className={highlight ? ('link text-light') : ('link text-dark')}><FontAwesomeIcon icon={faGithub} /> GitHub</Link></ListGroup.Item>
+                <SocialNavigations to={'/'} highlight={highlight}><FontAwesomeIcon icon={faGithub} /> Github</SocialNavigations>
+                {/* <ListGroup.Item style={{ backgroundColor: 'inherit', border: '0px' }}><Link to={'/'} className={highlight ? ('link text-light') : ('link text-dark')}><FontAwesomeIcon icon={faGithub} /> GitHub</Link></ListGroup.Item> */}
                 <ListGroup.Item style={{ backgroundColor: 'inherit', border: '0px' }}><Link to={'/'} className={highlight ? ('link text-light') : ('link text-dark')}><FontAwesomeIcon icon={faLinkedin} /> LinkedIn</Link></ListGroup.Item>
                 <ListGroup.Item style={{ backgroundColor: 'inherit', border: '0px' }}><Link to={'/'} className={highlight ? ('link text-light') : ('link text-dark')}><FontAwesomeIcon icon={faTumblr} /> Tumblr</Link></ListGroup.Item>
                 <ListGroup.Item style={{ backgroundColor: 'inherit', border: '0px' }}><Link to={'/'} className={highlight ? ('link text-light') : ('link text-dark')}><FontAwesomeIcon icon={faDiscord} /> Discord</Link></ListGroup.Item>
@@ -197,13 +165,18 @@ const Footer = () => {
 
     </Container>
     {/* <Container className='hr bg-dark my-4' style={{ minHeight: '1px' }} /> */}
-    <Container fluid className='bg-dark p-0 mb-1' style={{ minHeight: '20px' }} />
-    <Container className='bg-dark bg-gradient text-white  text-center p-0 mb-4'>Repositories</Container>
+
+    <Container className='bg-dark bg-gradient p-0 mb-1' style={{ minHeight: '20px' }} />
+    <Container fluid className='bg-dark text-white text-center p-0 mb-4'>Repositories</Container>
     <Container className='d-flex flex-row justify-content-around'>
       <ListGroup style={{ marginTop: '68px' }}>
-        <Container role='button' onClick={()=>setHighlightRepo(true)} className='d-flex'>
+        <Container className='d-flex'>
           <Card.Header className='text-primary text-center fs-3 m-2'>Repositories</Card.Header>
           <Card.Text className='text-center text-white p-2' style={{ marginTop: '12px' }}><FontAwesomeIcon icon={faAngleDoubleRight} /></Card.Text>
+          <Card.Body className='flex-column g-1'>
+            <span className='btn btn-sm btn-success my-auto' onClick={() => refreshRepoDetails()}>Refresh</span>
+            <span className='btn btn-sm btn-danger my-auto' onClick={() => resetFunction()}>&nbsp;Reset&nbsp;</span>
+          </Card.Body>
         </Container>
         <Card className='my-5' style={{ minWidth: '350px', marginLeft: '-100px' }}>
           <Card.Header className='text-center d-flex flex-column'>Developed By <FontAwesomeIcon icon={faAngleDoubleDown} className='mt-2' /></Card.Header>
@@ -217,13 +190,15 @@ const Footer = () => {
       </ListGroup>
       <ListGroup className='mx-2 d-flex flex-column'>
         <Row xs={12} sm={8} md={4} lg={2} className={highlightRepo ? 'g-4 border-danger' : 'g-4'} id='repo-section'>
-          {repoDetails.map(repo => (
-            <Col key={repo.repoId}>
+          {repositories.map(repo => (
+            <Col key={generateRandomString(10)}>
               <Card className='shadow-md'>
                 <Card.Body>
-                  <Card.Title>{repo.repoName}</Card.Title>
+                  <Card.Title>{repo.repoName && toCamelCase(repo.repoName)}</Card.Title>
                   <Card.Text>{repo.repoDesc}</Card.Text>
-                  <Card.Text>{repo.topics.map((topic) => topic + ', ').join('').slice(0, -2) + '.'}</Card.Text>
+                  {repo.topics && (
+                    <Card.Text>{repo.topics.map((topic, index) => (<Button key={generateRandomString(6)} className='btn btn-sm btn-secondary' style={{ padding: '2px', margin: '2px' }}>{topic}</Button>))}</Card.Text>
+                  )}
                   <Card.Link href={repo.repoUrl} target="_blank" rel="noopener noreferrer">View on GitHub</Card.Link>
                 </Card.Body>
                 <Card.Footer>
@@ -235,6 +210,11 @@ const Footer = () => {
         </Row>
       </ListGroup>
 
+    </Container>
+    <Container fluid className='bg-gradient p-0 mt-5 d-flex flex-column' style={{ minHeight: '100px' }}>
+      <Container className='my-auto' style={{ backgroundImage: 'linear-gradient(rgba(108, 180, 8, 0.7), rgba(108, 180, 8, 0.8), rgba(108, 180, 8, 0.9), rgba(108, 180, 8, 0.8), rgba(108, 180, 8, 0.7))', minHeight: '25px' }} ></Container>
+      <Container className='w-50 bg-dark text-white text-center' style={{ marginTop: '-50px', fontFamily: 'monospace' }}>All Rights Reserved &copy; ml.com</Container>
+      <span className='' style={{ minHeight: '2px', backgroundColor: 'purple' }} />
     </Container>
   </Container>
 }
