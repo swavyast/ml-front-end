@@ -1,8 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { AuthContext, LoginFormContext, MessageContext, TokenContext, UserContext, useNavigation } from '../AppContext';
-import { Button, Container, Form, InputGroup, Modal, Popover } from 'react-bootstrap';
-import { FormToggle } from '../AppContext';
-import { ToggleMe } from './Home';
+import React, { useContext, useState } from 'react'
+import { AuthContext, MessageContext, TokenContext, UserContext, useNavigation } from '../AppContext';
+import { Button, Container, Form, Popover } from 'react-bootstrap';
 
 const Login = ({ toggle, setToggle }) => {
     const authContext = useContext(AuthContext);
@@ -34,12 +32,12 @@ const Login = ({ toggle, setToggle }) => {
 
 
         if (name === 'username') {
-            const msg = validateUsername(value);
+            const msg = validateUsername();
 
             setError({ ...error, username: msg });
 
         } else if (name === 'password') {
-            const msg = validatePassword(value);
+            const msg = validatePassword();
 
             setError({ ...error, password: msg });
         }
@@ -134,40 +132,39 @@ const Login = ({ toggle, setToggle }) => {
     };
 
     return (
-        <Container fluid className='py-auto' style={{ minHeight: '550px', marginTop: '100px' }}>
+        <Container fluid className='py-auto'> {/** style={{ minHeight: '550px', marginTop: '100px' }} */}
             <Container id='formDiv' style={{ position: 'relative' }}>
-                <Container>
+                <Container className='mt-1'>
                     <Form method='post' className='form-bg d-flex flex-column text-black mx-auto shadow-lg w-50' onSubmit={(event) => submitHandler(event)}>
-                        <Form.Text className=''><center className='fs-4 mb-4 text-white'>Login</center></Form.Text>
-                        <Form.Group className='d-flex flex-row mx-auto w-75'>
-                            <Form.Label htmlFor='username' className='my-auto' style={{ marginRight: '25px' }}>Email/Username</Form.Label>
+                        <Form.Group className='d-flex flex-row mx-auto w-75 mt-5'>
+                            <Form.Label htmlFor='username' className='my-auto' style={{ marginRight: '60px' }}>Email/Username</Form.Label>
                             <Form.Control
                                 className='mb-1'
                                 name='username'
                                 value={formData.username}
                                 onChange={handleChange}
                                 placeholder='email/username'
-                                style={{ width: '250px', height: '60px' }}
+                                style={{ width: '250px', height: '40px' }}
                             />
 
                         </Form.Group>
                         <Form.Group className='d-flex flex-row mx-auto w-75'>
-                            <Form.Label htmlFor='password' className='my-auto' style={{ marginRight: '75px' }}>Password</Form.Label>
+                            <Form.Label htmlFor='password' className='my-auto' style={{ marginRight: '63px' }}>Password</Form.Label>
                             <Form.Control
                                 className='m1-1'
                                 name='password'
                                 value={formData.password}
                                 onChange={handleChange}
                                 placeholder='password'
-                                style={{ width: '250px', height: '60px' }}
+                                style={{ width: '250px', height: '40px' }}
                             />
 
                         </Form.Group>
-                        <Form.Group className='d-flex flex-row gap-2 my-4 mx-auto'>
-                            <Button type='submit' className='btn btn-success'>Login</Button>
+                        <Form.Group className='d-flex flex-row gap-2 my-5 mx-auto'>
+                            <Button type='submit' className='btn btn-primary'>Login</Button>
                             <Button type='submit' className='btn btn-secondary' onClick={resetFormData}>Reset</Button>
                         </Form.Group>
-                        <Form.Text className='bg-light py-1 ms-auto mb-3 px-2' style={{ width: '220px' }}>Not registered yet ? <b className='text-primary px-2' role='button' onClick={() => (setToggle(!toggle))}>Register</b></Form.Text>
+                        <Form.Text role='button' onClick={() => (setToggle(!toggle))} className='bg-light py-1 ms-auto mb-3 px-2' style={{ width: '220px' }}>Not registered yet ? <b className='text-primary px-2'>Register</b></Form.Text>
                     </Form>
                 </Container>
             </Container>

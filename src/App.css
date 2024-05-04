@@ -41,3 +41,7 @@ body {
   background-color: "inherit";
   border: "0px";
 }
+
+.bg-danger-hover:hover {
+  background-color: #dc3545 !important;
+}

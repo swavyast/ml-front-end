@@ -9,7 +9,7 @@ const SocialNavigations = ({ to, href, children, highlight }) => {
 
   return (
     <ListGroup.Item style={{ backgroundColor: 'inherit', border: '0px' }}>
-      <LinkComponent {...linkProps} className={highlight ? 'link text-dark' : 'link text-light'}>
+      <LinkComponent {...linkProps} className={highlight ? ('link text-light') : ('link text-light')}>
         {children}
       </LinkComponent>
     </ListGroup.Item>

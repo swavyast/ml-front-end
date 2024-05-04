@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { AuthContext, MessageContext, TokenContext, UserContext, useNavigation } from '../AppContext';
-import { Button, Container, Form, InputGroup, Popover } from 'react-bootstrap';
+import { Button, Container, Form, Popover } from 'react-bootstrap';
 
 const Register = ({ toggle, setToggle }) => {
     const authContext = useContext(AuthContext);
@@ -101,7 +101,7 @@ const Register = ({ toggle, setToggle }) => {
         let maxLength = event.target.getAttribute('maxLength');
         let currLength = value.length;
         if (name === 'email') {
-            while (currLength <= maxLength) {
+            if (currLength <= maxLength) {
                 setInfo({ ...info, email: (maxLength - currLength) + ' characters remaining' });
             }
         }
@@ -117,12 +117,12 @@ const Register = ({ toggle, setToggle }) => {
 
 
         if (name === 'email') {
-            const msg = validateEmail(value);
+            const msg = validateEmail();
 
             setError({ ...error, email: msg });
 
         } else if (name === 'phone') {
-            const msg = validatePhone(value);
+            const msg = validatePhone();
             const maxLen = event.target.getAttribute('maxLength');
             if (value.length > maxLen) {
                 setError({ ...error, phone: 'length exceeded the maximum limit' });
@@ -130,12 +130,12 @@ const Register = ({ toggle, setToggle }) => {
             setError({ ...error, phone: msg });
 
         } else if (name === 'username') {
-            const msg = validateUsername(value);
+            const msg = validateUsername();
 
             setError({ ...error, username: msg });
 
         } else if (name === 'password') {
-            const msg = validatePassword(value);
+            const msg = validatePassword();
 
             setError({ ...error, password: msg });
         }
@@ -164,12 +164,11 @@ const Register = ({ toggle, setToggle }) => {
     }
 
     return (
-        <Container className='py-auto' style={{ minHeight: '550px', marginTop:'-10px'}}> 
+        <Container className='py-auto'> {/** style={{ minHeight: '550px', marginTop:'-10px'}} */}
             <Container id='formDiv' style={{ position: 'relative' }}>
-                <Container className='mt-5'>
+                <Container className='mt-1'>
                     <Form method='post' className='form-bg d-flex flex-column text-black mx-auto shadow-lg w-50' onSubmit={(event) => submitHandler(event)}>
-                        <Form.Text className=''><center className='fs-4 mb-4 text-white'>Register</center></Form.Text>
-                        <Form.Group className='d-flex flex-row mx-auto w-75'>
+                        <Form.Group className='d-flex flex-row mx-auto w-75 mt-5'>
                             <Form.Label htmlFor='email' className='my-auto' style={{ marginRight: '82px' }}>Email</Form.Label>
                             <Form.Control
                                 className='mb-1'
@@ -180,7 +179,7 @@ const Register = ({ toggle, setToggle }) => {
                                 onChange={handleChange}
                                 maxLength={50}
                                 placeholder='email'
-                                style={{ width: '250px', height: '60px' }}
+                                style={{ width: '250px', height: '40px' }}
                             />
                         </Form.Group>
                         <Form.Group className='d-flex flex-row mx-auto w-75'>
@@ -194,7 +193,7 @@ const Register = ({ toggle, setToggle }) => {
                                 onChange={handleChange}
                                 maxLength={14}
                                 placeholder='phone'
-                                style={{ width: '250px', height: '60px' }}
+                                style={{ width: '250px', height: '40px' }}
                             />
                         </Form.Group>
                         <Form.Group className='d-flex flex-row mx-auto w-75'>
@@ -208,7 +207,7 @@ const Register = ({ toggle, setToggle }) => {
                                 onChange={handleChange}
                                 maxLength={20}
                                 placeholder='username'
-                                style={{ width: '250px', height: '60px' }}
+                                style={{ width: '250px', height: '40px' }}
                             />
                         </Form.Group>
                         <Form.Group className='d-flex flex-row mx-auto w-75'>
@@ -222,14 +221,14 @@ const Register = ({ toggle, setToggle }) => {
                                 onChange={handleChange}
                                 maxLength={20}
                                 placeholder='password'
-                                style={{ width: '250px', height: '60px' }}
+                                style={{ width: '250px', height: '40px' }}
                             />
                         </Form.Group>
                         <Form.Group className='d-flex flex-row gap-2 my-4 mx-auto'>
-                            <Button type='submit' className='btn btn-success'>Register</Button>
+                            <Button type='submit' className='btn btn-primary'>Register</Button>
                             <Button type='submit' className='btn btn-secondary' onClick={resetFormData}>Reset</Button>
                         </Form.Group>
-                        <Form.Text className='bg-light py-1 ms-auto mb-3 px-2' style={{width:'220px'}}>Registered already ? <b className='text-primary px-2' role='button' onClick={() => (setToggle(!toggle))}>Login</b></Form.Text>
+                        <Form.Text role='button' onClick={() => (setToggle(!toggle))} className='bg-light py-1 ms-auto mb-3 px-2' style={{width:'220px'}}>Registered already ? <b className='text-primary px-2'>Login</b></Form.Text>
                     </Form>
                 </Container>
             </Container>

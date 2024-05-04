@@ -3,19 +3,16 @@ import { isValidUsername } from "../js/Utilities";
 import { RepositoryContext, UserContext } from "../AppContext";
 import { useContext } from "react";
 
-const useUserContext = () => useContext(UserContext);
-const useRepositoryContext = () => useContext(RepositoryContext);
-
 const useOctokit = () => {
     const octokit = new Octokit({
-        auth: process.env.GITHUB_TOKEN
+        auth: process.env.REACT_APP_GITHUB_TOKEN
     });
     return octokit;
 };
 
 const useRepoService = () => {
-    const userContext = useUserContext();
-    const repositoryContext = useRepositoryContext();
+    const userContext = useContext(UserContext);
+    const repositoryContext = useContext(RepositoryContext);
     const octokit = useOctokit();
 
     const resetRepositories = () => {
@@ -214,11 +211,45 @@ const useRepoService = () => {
         })
 
     }
+
+
+
+
+    const fetchUserData = async () => {
+        const response = await octokit.request(`GET /user`, {
+            headers: {
+                'X-GitHub-Api-Version': '2022-11-28',
+                'accept': 'application/json',
+                'user-agent': 'ml.com',
+                'authorization': process.env.REACT_APP_GITHUB_CLIENT_ID
+            }
+        })
+
+        if (response.status === 200) {
+            const param = '?client-id='+process.env.REACT_APP_GITHUB_CLIENT_ID+'&client-secret='
+            +process.env.REACT_APP_GITHUB_CLIENT_SECRET+'&code='+localStorage.getItem('code');
+            response.then((res) => {
+                localStorage.setItem('userData', res.data.json());
+                return response.data;
+            });
+        }else{
+
+            throw new Error('error fetching user details : ', response.statusText);
+        }
+    }
+
+
+
+
+
+
     return {
         // Return the methods you want to expose from this service
         resetRepositories: resetRepositories,
         fetchAndMapMyRepo: fetchAndMapMyRepo,
-        refreshMyRepo: refreshMyRepo
+        refreshMyRepo: refreshMyRepo,
+        fetchUserData: fetchUserData
     };
+
 }
 export default useRepoService;

@@ -39,7 +39,7 @@ const Header = () => {
                                     <Navbar.Text title='Search' className='search'>
                                         <FormControl className='bg-white text-black' placeholder='search something...' name='searchBar' value={searchValue} onChange={(event) => handleChange(event)} />
                                     </Navbar.Text>
-                                    <span className='vr text-white fs-5 mx-1 my-auto'></span>
+                                    <span className='vr text-white fs-5 mx-1 my-auto' />
                                     <Button className='btn btn-sm btn-secondary px-1 py-auto' style={{ height: '40px', marginTop: '7px' }}>Search</Button>
                                 </Form.Group>
                             </Form>
@@ -48,6 +48,8 @@ const Header = () => {
                     <Navbar bg='primary' data-bs-theme='primary' className='d-flex flex-row-reverse' style={{ height: '80px' }}>
                         <Container>
                             <Navbar.Text className='me-auto text-light'>Signed in as <span className='vr text-white fs-6 mx-1 my-auto'></span> {userContext.username}</Navbar.Text>
+                            <span className='vr text-white fs-5 mx-1 my-auto' />
+                            <Navbar.Collapse><Button className='bg-danger-hover' onClick={()=>localStorage.removeItem('code')}>Sign out</Button></Navbar.Collapse>
                         </Container>
                     </Navbar>
                 </Col>
