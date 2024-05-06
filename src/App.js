@@ -1,11 +1,13 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import './App.css';
 import Header from './components/Header';
+import LoginPage from './components/LoginPage';
 import Footer from './components/Footer';
 import { NetworkContext } from './AppContext';
 import LandingPage from './components/LandingPage';
 import NetworkError from './components/NetworkError';
 import { useContext, useEffect, useState } from 'react';
+import RegistrationPage from './components/RegistrationPage';
 
 function App() {
   // const [onlineStatus, setOnlineStatus] = useState(false);onlineStatus={onlineStatus} setOnlineStatus={setOnlineStatus} 
@@ -64,8 +66,10 @@ function App() {
       <Routes>
         {(networkStatus.status && !loading ) && <Route path='/' element={<NetworkError />} />}
         {(!networkStatus.status && !loading ) && <Route path='/' element={<LandingPage />} />}
+        <Route path='/login' element={<LoginPage />} />
+        <Route path='/register' element={<RegistrationPage />} />
       </Routes>
-      <Footer />
+      {/* <Footer /> */}
     </Router>
   );
 }

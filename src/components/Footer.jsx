@@ -37,16 +37,10 @@ const Footer = () => {
   }
 
   useEffect(() => {
-    if (isValidUsername(username)) {
-      console.log('setting username now...');
-      // setUsername('swavyast');
-    } else {
-      // navigate('/login')
-      console.log('The operation is insecure');
-    }
+    // setUsername(localStorage.getItem('accessToken'))
     console.log('username after setUsername() : ', username);
     return () => { };
-  }, [username, setUsername, navigate]);
+  }, [username, setUsername]);
 
 
   //fetching and mapping repository at the time of page loading.

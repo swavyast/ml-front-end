@@ -226,13 +226,10 @@ const useRepoService = () => {
         })
 
         if (response.status === 200) {
-            const param = '?client-id='+process.env.REACT_APP_GITHUB_CLIENT_ID+'&client-secret='
-            +process.env.REACT_APP_GITHUB_CLIENT_SECRET+'&code='+localStorage.getItem('code');
-            response.then((res) => {
-                localStorage.setItem('userData', res.data.json());
-                return response.data;
-            });
-        }else{
+
+            return response.data;
+
+        } else {
 
             throw new Error('error fetching user details : ', response.statusText);
         }

@@ -1,20 +1,31 @@
-a,
-.link {
+.link,
+a {
   text-decoration: none;
   color: inherit;
+}
+
+#scrollspy{
+  background: rgb(0, 155, 255);
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+#scrollspy:hover{
+  background: rgb(155, 0, 255);
+}
+
+.scrollspy{
+  opacity: 0;
+}
+.navbar-purple{
+  background: transparent;
 }
 
 .input-form-bg {
   border: 1px solid rgba(102, 51, 153, 0.8);
   border-radius: 10px;
-}
-
-body {
-  overflow-x: hidden;
-  background-image: linear-gradient(
-    rgba(48, 48, 48, 0.6),
-    rgb(243, 122, 36, 0.3)
-  );
 }
 
 .avatar {
@@ -44,4 +55,190 @@ body {
 
 .bg-danger-hover:hover {
   background-color: #dc3545 !important;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: url("./images/greyintersectingmaplines.png"); /**linear-gradient(rgba(136, 136, 255, 0.6), rgba(255, 255, 255, 0.6))*/
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.form-wrapper {
+  padding: 0;
+  width: 520px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  box-shadow: 10px 20px 20px 10px rgba(120, 120, 255, 0.3);
+}
+
+.login-form{
+  height: 420px;
+}
+
+.registration-form{
+  height: 600px;
+}
+
+.form-wrapper form {
+  width: 100%;
+  height: 100%;
+  padding: 0px 20px;
+  border: 1px solid #888888;
+  border-radius: 10px;
+  backdrop-filter: blur(0px);
+}
+
+.form-wrapper h1 {
+  text-align: center;
+  margin-top: 20px;
+  opacity: 0.6;
+  color: rgb(155, 0, 255);
+  font-weight: 700;
+}
+.form-wrapper .input-box {
+  align-items: center;
+  padding: 10px 20px 20px 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-wrapper .input-box .icon{
+  position: absolute;
+  margin: 15px 0px 0px 15px;
+  left: 80%;
+  color: rgb(155, 0, 255);
+}
+
+.form-wrapper .input-box input {
+  width: 100%;
+  height: 100%;
+  padding: 10px 10px 10px 20px;
+  outline: none;
+  border: 1px solid rgba(190, 164, 231, 0.5);
+  border-radius: 40px;
+  box-shadow: 0px 1px 1px 0px rgb(155, 155, 155);
+  color: rgb(0, 155, 255);
+}
+
+.form-wrapper .input-box input:focus + .icon, .gender span{
+  color: rgb(0, 155, 255);
+}
+
+.form-wrapper .input-box input::placeholder {
+  color: rgb(155, 0, 255);
+  text-transform: capitalize;
+}
+
+.form-wrapper .rememberMe,
+.form-wrapper .registration-link p {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  padding: 10px 15px;
+  color: rgb(0, 155, 255);
+}
+
+.form-wrapper .rememberMe label input {
+  margin-right: 10px;
+  outline: rgb(0, 155, 255);
+}
+
+.form-wrapper .rememberMe a {
+  text-decoration: none;
+  color: rgb(155, 0, 255);
+}
+
+.form-wrapper .rememberMe a:hover {
+  text-decoration: underline;
+}
+
+.registration-link p a:hover {
+  text-decoration: none;
+}
+
+.form-wrapper button {
+  width: 100%;
+  height: 6vh;
+  font-weight: 700;
+  margin: 20px 0px 20px 0px;
+  background: transparent;
+  border: 1px solid rgba(0, 155, 255, 0.5);
+  border-radius: 40px;
+  /* box-shadow: 2px 1px 1px 2px rgb(110, 110, 110); */
+  color: rgb(155, 0, 255);
+}
+
+.form-wrapper button:hover {
+  border: 1px solid rgb(0, 155, 255);
+}
+
+.registration-link p a {
+  text-decoration: none;
+  padding: 5px;
+  border: 1px solid rgb(0, 155, 255);
+  color: rgb(155, 0, 255);
+  border-radius: 5px;
+  font-weight: 700;
+
+}
+
+.registration-link p a:hover {
+  border: 1px solid rgb(155, 0, 255);
+  color: rgb(0, 155, 255);
+}
+
+.gender {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  color: rgb(155, 0, 255);
+}
+
+.gender label{
+  font-weight: 700;
+}
+#gender {
+  display: flex;
+  flex-direction: row;
+}
+
+#gender input {
+  margin: 5px;
+}
+
+#gender .icon{
+  margin-block: 5px;
+  color: rgb(0, 155, 255);
+}
+
+#dob{
+  width: 100%;
+  padding: 30px 20px 10px 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#dob label{
+  color: rgb(155, 0, 255);
+  font-weight: 700;
+  margin-block: 5px;
+}
+
+#dob input{
+  width: 60%;
+  height: 6vh;
+  outline: none;
+  text-transform: uppercase;
+  border: 1px solid rgb(155, 0, 255);
+  border-radius: 20px;
+  padding: 0px 20px 0px 30px;
+  color: rgb(155, 0, 255);
 }
