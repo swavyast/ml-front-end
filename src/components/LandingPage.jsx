@@ -20,7 +20,7 @@ const LandingPage = () => {
         const queryString = window.location.search;
         const searchParams = new URLSearchParams(queryString);
         const codeParams = searchParams.get('code');
-        userContext.setUsername(codeParams)
+        // userContext.setUsername(codeParams)
         if (codeParams && localStorage.getItem('accessToken') === null) {
             async function getAccessToken() {
                 await fetch('http://localhost:4000/getAccessToken?code=' + codeParams, {
@@ -33,22 +33,35 @@ const LandingPage = () => {
                             localStorage.setItem('accessToken', data.access_token);
                             setReRender(!reRender);
                         }
-                        return data;
                     })
             }
             getAccessToken();
         }
-        console.log('code params : ', codeParams);
     }, []);
 
+
+    async function getUserData() {
+
+        await fetch('http://localhost:4000/getUserData', {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer' + localStorage.getItem('accessToken') //Bearer AccessToken
+            }
+        }).then((response) => {
+            return response.json();
+        }).then((data) => {
+            console.log('user data : ', data);
+            useContext.setUsername(data.login);
+        })
+    }
 
     function loginWithGithub(event) {
         event.preventDefault();
         window.location.assign('https://www.github.com/login/oauth/authorize?client_id=' + GITHUB_CLIENT_ID);
     }
     return <>
-        {(userContext.username !== '') && <Home />}
-        {(userContext.username === '') && <Container className='text-center bg-inherit justify-content-evenly' style={{ minHeight: '500px' }}>
+        {(localStorage.getItem('accessToken')) ? <Home /> :
+        <Container className='text-center bg-inherit justify-content-evenly' style={{ minHeight: '500px' }}> {/**(userContext.username === '') &&  */}
             <Container className='p-5'>
                 <h1 className='text-white'>{toggle ? ('Get yourself registered today.') : ('You are not logged in yet.')}</h1>
                 <Container className='mt-5 justify-content-evenly'>

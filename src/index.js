@@ -9,6 +9,8 @@ import '@fortawesome/fontawesome-svg-core'
 import { faGithub, faLinkedin, faTumblr, faDiscord, faWhatsapp, faFacebook, faTwitter, faXTwitter, faInstagram, faSkype, faGooglePlay, faGoogleDrive, faYoutube, faTelegram } from '@fortawesome/free-brands-svg-icons'
 import { faHouse, faAngleLeft, faAngleRight, faAngleUp, faAngleDown, faAngleDoubleRight, faAngleDoubleDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FaUser, FaLock } from "react-icons/fa";
+import { CgGenderFemale, CgGenderMale } from "react-icons/cg";
 import myDp from '../src/images/DP_1.png';
 import { GoogleOAuthProvider } from '@react-oauth/google'
 import { AppContext } from './AppContext';
@@ -34,5 +36,6 @@ export {
   faWhatsapp, faFacebook, faTwitter, faXTwitter,
   faInstagram, faSkype, faGooglePlay, faGoogleDrive,
   faYoutube, faTelegram,
+  FaUser, FaLock, CgGenderFemale, CgGenderMale,
   myDp
 }
