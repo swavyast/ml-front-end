@@ -8,6 +8,8 @@ import LandingPage from './components/LandingPage';
 import NetworkError from './components/NetworkError';
 import { useContext, useEffect, useState } from 'react';
 import RegistrationPage from './components/RegistrationPage';
+import Main from './components/Main';
+import NewFooter from './components/NewFooter';
 
 function App() {
   // const [onlineStatus, setOnlineStatus] = useState(false);onlineStatus={onlineStatus} setOnlineStatus={setOnlineStatus} 
@@ -65,10 +67,11 @@ function App() {
       <Header />
       <Routes>
         {(networkStatus.status && !loading ) && <Route path='/' element={<NetworkError />} />}
-        {(!networkStatus.status && !loading ) && <Route path='/' element={<LandingPage />} />}
+        {(!networkStatus.status && !loading ) && <Route path='/' element={<Main />} />}
         <Route path='/login' element={<LoginPage />} />
         <Route path='/register' element={<RegistrationPage />} />
       </Routes>
+      <NewFooter />
       {/* <Footer /> */}
     </Router>
   );

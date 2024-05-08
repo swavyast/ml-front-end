@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 
 export const NetworkContext = createContext();
+export const ErrorContext = createContext();
 export const AuthContext = createContext();
 export const TokenContext = createContext();
 export const MessageContext = createContext();
@@ -27,9 +28,13 @@ export const AppContext = ({ children }) => {
         {
             status: false,
             messageString: ''
-          }
+        }
     );
-    const networkContext = useMemo(()=>({networkStatus, setNetworkStatus}), [networkStatus, setNetworkStatus]);
+    const networkContext = useMemo(() => ({ networkStatus, setNetworkStatus }), [networkStatus, setNetworkStatus]);
+
+    const [error, setError] = useState([]);
+
+    const errorContext = useMemo(() => ({ error, setError }), [error, setError]);
 
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const authContext = useMemo(() => ({ isAuthenticated, setIsAuthenticated }), [isAuthenticated, setIsAuthenticated]);
@@ -52,19 +57,21 @@ export const AppContext = ({ children }) => {
 
     return (
         <NetworkContext.Provider value={networkContext}>
-            <AuthContext.Provider value={authContext}>
-                <TokenContext.Provider value={tokenContext}>
-                    <MessageContext.Provider value={messageContext}>
-                        <UserContext.Provider value={userContext}>
-                            <FormToggleContext.Provider value={formToggleContext}>
-                                <RepositoryContext.Provider value={repositoryContext}>
-                                    {children}
-                                </RepositoryContext.Provider>
-                            </FormToggleContext.Provider>
-                        </UserContext.Provider>
-                    </MessageContext.Provider>
-                </TokenContext.Provider>
-            </AuthContext.Provider>
+            <ErrorContext.Provider value={errorContext}>
+                <AuthContext.Provider value={authContext}>
+                    <TokenContext.Provider value={tokenContext}>
+                        <MessageContext.Provider value={messageContext}>
+                            <UserContext.Provider value={userContext}>
+                                <FormToggleContext.Provider value={formToggleContext}>
+                                    <RepositoryContext.Provider value={repositoryContext}>
+                                        {children}
+                                    </RepositoryContext.Provider>
+                                </FormToggleContext.Provider>
+                            </UserContext.Provider>
+                        </MessageContext.Provider>
+                    </TokenContext.Provider>
+                </AuthContext.Provider>
+            </ErrorContext.Provider>
         </NetworkContext.Provider>
     )
 }
