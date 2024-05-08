@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext, MessageContext, TokenContext, UserContext, useNavigation } from '../AppContext'
-import { Col, Container, Row } from 'react-bootstrap';
+import { Col, Container, Modal, Row } from 'react-bootstrap';
 import useRepoService from '../services/RepoService';
+import LoginPage from './LoginPage';
 
 const Home = () => {
 
@@ -10,6 +11,7 @@ const Home = () => {
   const messageContext = useContext(MessageContext);
   const userContext = useContext(UserContext);
   const repoService = useRepoService();
+  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigation();
 
   const [userDetails, setUserDetails] = useState([{
@@ -26,6 +28,14 @@ const Home = () => {
       const userDetails = localStorage.getItem('userData');
     }, []);
 
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
+  const openModal = () => {
+    setShowModal(true);
+  };
+
   return <>
     {<Container fluid className='p-0' style={{ minHeight: '500px' }}>
       <Row>
@@ -34,12 +44,22 @@ const Home = () => {
             <Container fluid className='text-light bg-black py-1'>marketListing </Container>
             <Container className='text-light px-4 py-1'>
 
-              <h2 className='text-center'>Welcome to dashboard { localStorage.getItem('accessToken')}</h2>
+              <h2 className='text-center'>Welcome to dashboard {localStorage.getItem('accessToken')}</h2>
 
             </Container>
           </Container>
         </Col>
       </Row>
+      {/* Modal Component */}
+      <Modal show={showModal} onHide={closeModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Login</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {/* Render your login form component here */}
+          <LoginPage />
+        </Modal.Body>
+      </Modal>
     </Container>}
   </>
 }

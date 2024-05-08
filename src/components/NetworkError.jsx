@@ -11,7 +11,7 @@ const NetworkError = () => {
     const renderNetworkStatus = () => {
         if ((networkStatus.messageString !== '')) {
             return (
-                <Container className='bg-dark border border-dark p-0'>
+                <Container className='bg-dark border border-dark p-0' style={{zIndex:'1000'}}>
                     <Card className='bg-secondary d-flex flex-column'>
                         <Card.Header className='bg-dark text-white text-center'>Network Status</Card.Header>
                         <Card.Body style={{ minHeight: '250px', marginTop: '170px' }}>
